@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vaca</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+
+
+        #recursos {
+            display: none;
+        }
+
+        #tela {
+            display: block;
+            /*
+            width: 100vw;
+            height: 100vh;
+            */
+        }
+
+        canvas {
+            border: 1px solid #d3d3d3;
+            background-color: #FAFDFF;
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+    <script src="Ludoteca.js"></script>
+    <script>
+        var tela;
+        var contexto;
+        var cut;
+        var filme;
+        //...
+        var play;
+        var cronometro;
+        var telaOk = false;
+
+        function inicia() {
+            tela = new Tela(document.getElementById("tela"));
+            contexto = tela.contexto;
+ 
+            cronometro = new Cronometro();
+
+            filme = new Filme(document.getElementById("cut"));
+            cut = new ImagemFilme(0, 0, filme);
+            
+            play = new Imagem(tela.largura * 0.8, tela.altura * 0.8, document.getElementById("play"));
+            //...
+            filme.processaReproducaoTerminada = function () {
+                filme.pausa();
+                telaOk = true;
+            }
+            
+            //...
+            tela.processaClique = processaClique;
+            tela.processaRatoDescido = processaRatoDescido;
+            tela.processaRatoSubido = processaRatoSubido;
+            tela.processaRatoMovido = processaRatoMovido;
+            tela.processaTeclaDescida = processaTeclaDescida;
+            tela.processaTeclaSubida = processaTeclaSubida;
+        }
+
+        function desenha() {
+            contexto.clearRect(0, 0, tela.largura, tela.altura);
+            cut.desenha(tela);
+            if (filme.posicao == 0) {
+                filme.reproduz();
+            }
+
+            if (telaOk) {
+                play.desenha(tela);
+            }
+            //...
+            if (cut.contemPonto(tela.ratoX, tela.ratoY)) {
+                tela.cursor = "pointer";
+            }
+            window.requestAnimationFrame(desenha);
+            
+        }
+
+        function processaClique() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+            if (play.contemPonto(tela.ratoX, tela.ratoY)) {
+                window.location.href = "nivel_3.html";
+            }
+        }
+
+        function processaRatoDescido() {
+        }
+
+        function processaRatoSubido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaRatoMovido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaTeclaDescida() {
+            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
+            if (tela.codigoTecla == "Space") {        // barra de espaços
+                //...
+
+            }
+            if (tela.codigoTecla == "ArrowLeft") {    // esquerda
+                //...
+
+        
+
+            }
+            if (tela.codigoTecla == "ArrowUp") {      // cima
+                //...
+            }
+            if (tela.codigoTecla == "ArrowRight") {   // direita
+                //...
+   
+            }
+            if (tela.codigoTecla == "ArrowDown") {    // baixo
+                //...
+            }
+        }
+
+        function processaTeclaSubida() {
+            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
+            if (tela.codigoTecla == "Space") {
+                //...
+            }
+            if ((tela.codigoTecla == "ArrowLeft") || (tela.codigoTecla == "ArrowRight")) {
+                //...
+
+            }
+            if ((tela.codigoTecla == "ArrowUp") || (tela.codigoTecla == "ArrowDown")) {
+                //...
+            }
+        }
+
+        window.onload = function () {
+            inicia();
+            desenha();
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="tela" width="800" height="600">O seu <em>browser</em> não suporta o elemento
+        <code>canvas</code>!</canvas>
+    <div id="recursos">
+        <!-- ... -->
+        <img id="play" src="recursos/Botão Jogar.png">
+        <video id="cut" src="recursos/Cão_2.mp4"></video>
+    </div>
+</body>
+
+</html>

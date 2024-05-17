@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Menu Principal - Lobo Feroz</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+
+
+        #recursos {
+            display: none;
+        }
+
+        #tela {
+            display: block;
+            /*
+            width: 100vw;
+            height: 100vh;
+            */
+        }
+
+
+        canvas {
+            border: 1px solid #d3d3d3;
+            background-color: #FAFDFF;
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        
+    </style>
+    <script src="Ludoteca.js"></script>
+    <script>
+        var tela;
+        var contexto;
+        var fundo;
+        //...
+        var play;
+        var tutorial;
+        var som;
+        var somoff;
+        var tut;
+        var bgmusic;
+        var cruz;
+
+        function inicia() {
+            tela = new Tela(document.getElementById("tela"));
+            contexto = tela.contexto;
+
+            
+            fundo = new Imagem(0, 0, document.getElementById("fundo"));
+            bgmusic = new Som(document.getElementById("bgmusic"));
+            bgmusic.volume = 1;
+            //...
+            play = new Imagem(tela.largura * 0.42, tela.altura * 0.6, document.getElementById("play"));
+            tutorial = new Imagem(tela.largura * 0.40, tela.altura * 0.7, document.getElementById("tutorial"));
+
+            tut = new Imagem(tela.largura * 0.15, tela.altura * 0.2, document.getElementById("tut"));
+            tut.visivel = false;
+
+            som = new Imagem(tela.largura * 0.48, tela.altura * 0.8, document.getElementById("som"));
+            som.visivel = true;
+
+            somoff = new Imagem(tela.largura * 0.48, tela.altura * 0.8, document.getElementById("somoff"));
+            somoff.visivel = false;
+
+            cruz =  new Rectangulo(150, 150, tela.largura * 0.1, tela.altura * 0.1, "lightblue");
+            cruz.opacidade = 0;
+            cruz.visivel = false;
+            //...
+            tela.processaClique = processaClique;
+            tela.processaRatoDescido = processaRatoDescido;
+            tela.processaRatoSubido = processaRatoSubido;
+            tela.processaRatoMovido = processaRatoMovido;
+            tela.processaTeclaDescida = processaTeclaDescida;
+            tela.processaTeclaSubida = processaTeclaSubida;
+        }
+
+        function desenha() {
+            contexto.clearRect(0, 0, tela.largura, tela.altura); 
+            fundo.desenha(tela);       
+            play.desenha(tela);
+            tutorial.desenha(tela);
+            som.desenha(tela);
+            somoff.desenha(tela); 
+            tut.desenha(tela);
+            cruz.desenha(tela);
+            bgmusic.reproduz();           //...
+            //...
+          
+            window.requestAnimationFrame(desenha);
+        }
+
+        function processaClique() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //... 
+           
+        }
+
+        function processaRatoDescido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            if (play.contemPonto(tela.ratoX, tela.ratoY)) {
+                
+                window.location.href = "cena_abertura.html"; 
+            }
+
+            if (tutorial.contemPonto(tela.ratoX, tela.ratoY)) {
+                console.log("tutorial");
+                tut.visivel = true;
+                cruz.visivel = true;
+            }
+
+            if (cruz.contemPonto(tela.ratoX, tela.ratoY)) {
+                tut.visivel = false;                
+                console.log("clicaste");
+            }
+            
+            if (som.contemPonto(tela.ratoX, tela.ratoY)) {
+                if(som.imagem == document.getElementById("som")){
+                    somoff.visivel = true;
+                    som.visivel = false;
+                    bgmusic.volume = 0;
+                    som.imagem = document.getElementById("somoff");
+                
+                } else {
+                    somoff.visivel = false;
+                    som.visivel = true;
+                    bgmusic.volume = 1;
+                    som.imagem = document.getElementById("som");
+                }
+ 
+            }
+        }
+
+        function processaRatoSubido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaRatoMovido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            //...
+        }
+
+        function processaTeclaDescida() {
+            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
+            if (tela.codigoTecla == "Space") {        // barra de espaços
+                //...
+
+            }
+            if (tela.codigoTecla == "ArrowLeft") {    // esquerda
+                //...
+            }
+            if (tela.codigoTecla == "ArrowUp") {      // cima
+                //...
+            }
+            if (tela.codigoTecla == "ArrowRight") {   // direita
+                //...
+            }
+            if (tela.codigoTecla == "ArrowDown") {    // baixo
+                //...
+            }
+        }
+
+        function processaTeclaSubida() {
+            // usar a propriedade tela.codigoTecla, referente à tecla usada pelo utilizador
+            if (tela.codigoTecla == "Space") {
+                //...
+            }
+            if ((tela.codigoTecla == "ArrowLeft") || (tela.codigoTecla == "ArrowRight")) {
+                //...
+
+            }
+            if ((tela.codigoTecla == "ArrowUp") || (tela.codigoTecla == "ArrowDown")) {
+                //...
+            }
+        }
+
+        window.onload = function () {
+            inicia();
+            desenha();
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="tela" width="800" height="600">O seu <em>browser</em> não suporta o elemento
+        <code>canvas</code>!</canvas>
+    <div id="recursos">
+        <!-- ... -->
+        <img id="play" src="recursos/Botão Jogar.png">
+        <img id="tutorial" src="recursos/Botão Tutorial.png">
+        <img id="tut" src="recursos/Tutorial.png">
+        <img id="som" src="recursos/Som Ligado.png">
+        <img id="somoff" src="recursos/Som Desligado.png">
+        <img id="fundo" src="recursos/Menu.png">
+        <img id="cruz" src="recursos/X.png">
+        <audio id="bgmusic" src="recursos/menusound.mp3"></audio>
+    </div>
+</body>
+
+</html>
