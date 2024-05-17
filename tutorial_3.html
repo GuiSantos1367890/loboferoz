@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Vaca</title>
+    <title>Menu Principal - Lobo Feroz</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
 
@@ -21,6 +21,7 @@
             */
         }
 
+
         canvas {
             border: 1px solid #d3d3d3;
             background-color: #FAFDFF;
@@ -32,36 +33,29 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
+
+        
     </style>
     <script src="Ludoteca.js"></script>
     <script>
         var tela;
         var contexto;
-        var cut;
-        var filme;
+    
         //...
         var play;
-        var cronometro;
-        var telaOk = false;
+        var tutorial;
+        var fundo;
+       
 
         function inicia() {
             tela = new Tela(document.getElementById("tela"));
-            contexto = tela.contexto;
- 
-            cronometro = new Cronometro();
+            contexto = tela.contexto;           
+            fundo = new Imagem(0, 0, document.getElementById("fundo"));
 
-            filme = new Filme(document.getElementById("cut"));
-            cut = new ImagemFilme(0, 0, filme);
-            
-            play = new Imagem(tela.largura * 0.8, tela.altura * 0.8, document.getElementById("play"));
-            //...
-            
-            filme.processaReproducaoTerminada = function () {
-                filme.pausa();
-                telaOk = true;
-            }
-            
-            //...
+            play = new Imagem(tela.largura * 0.42, tela.altura * 0.9, document.getElementById("play"));
+            tutorial = new Imagem(tela.largura * 0.15, tela.altura * 0.2, document.getElementById("tutorial"));
+
+
             tela.processaClique = processaClique;
             tela.processaRatoDescido = processaRatoDescido;
             tela.processaRatoSubido = processaRatoSubido;
@@ -71,32 +65,31 @@
         }
 
         function desenha() {
-            contexto.clearRect(0, 0, tela.largura, tela.altura);
-            cut.desenha(tela);
-            if (filme.posicao == 0) {
-                filme.reproduz();
-            }
+            contexto.clearRect(0, 0, tela.largura, tela.altura); 
+            fundo.desenha(tela);
+            play.desenha(tela);
+            tutorial.desenha(tela);
 
-            if (telaOk) {
-                play.desenha(tela);
-            }
-            //...
-            if (cut.contemPonto(tela.ratoX, tela.ratoY)) {
-                tela.cursor = "pointer";
-            }
+          
             window.requestAnimationFrame(desenha);
-            
         }
 
         function processaClique() {
             // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
-            //...
-            if (play.contemPonto(tela.ratoX, tela.ratoY)) {
-                window.location.href = "tutorial_2.html";
-            }
+            //... 
+           
         }
 
         function processaRatoDescido() {
+            // usar as propriedades tela.ratoX e tela.ratoY, referentes às coordenadas do rato
+            if (play.contemPonto(tela.ratoX, tela.ratoY)) {
+                
+                window.location.href = "nivel_3.html"; 
+            }
+
+            
+
+        
         }
 
         function processaRatoSubido() {
@@ -117,16 +110,12 @@
             }
             if (tela.codigoTecla == "ArrowLeft") {    // esquerda
                 //...
-
-        
-
             }
             if (tela.codigoTecla == "ArrowUp") {      // cima
                 //...
             }
             if (tela.codigoTecla == "ArrowRight") {   // direita
                 //...
-   
             }
             if (tela.codigoTecla == "ArrowDown") {    // baixo
                 //...
@@ -159,8 +148,9 @@
         <code>canvas</code>!</canvas>
     <div id="recursos">
         <!-- ... -->
+        <img id="fundo" src="recursos/Cenário Cães.png">
         <img id="play" src="recursos/Botão Jogar.png">
-        <video id="cut" src="recursos/2_Vaca.mp4"></video>
+        <img id="tutorial" src="recursos/Tutorial_Cao.png">
     </div>
 </body>
 
