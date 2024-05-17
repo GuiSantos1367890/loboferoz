@@ -123,7 +123,7 @@
             for (var i = 0; i < obstaculos.length; i++) {
                 obstaculos[i].deltaX = -3;
                 obstaculos[i].x = (i * distanciaExtra) + ((i + 5) * (tela.largura / (obstaculos.length))) - obstaculos[i].largura / 4;
-                obstaculos[i].y = tela.altura * 0.86 - obstaculos[i].altura; // altura do chão menos a altura do obstáculo para que ele apareça em cima do chão
+                obstaculos[i].y = tela.altura * 0.844   - obstaculos[i].altura; // altura do chão menos a altura do obstáculo para que ele apareça em cima do chão
             }
 
             pausa = new Imagem(10, 10, document.getElementById("pausa"));
