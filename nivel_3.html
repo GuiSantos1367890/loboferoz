@@ -66,7 +66,7 @@
         var tempo;
         var cronometro;
         var cronometro_2;
-        var distanciaExtra = 600;
+        var distanciaExtra = 900;
 
         function inicia() {
             tela = new Tela(document.getElementById("tela"));
@@ -193,8 +193,8 @@
                 obstaculos[i].desenha(tela);
                 obstaculos[i].x += obstaculos[i].deltaX;
                 if (obstaculos[i].x + obstaculos[i].largura < 0) {
-                    obstaculos[i].x = tela.largura + Math.floor(Math.random() * (20 * tela.largura - obstaculos[i].largura)) + distanciaExtra;
-                    obstaculos[i].y = tela.altura * 0.86 - obstaculos[i].altura;
+                    obstaculos[i].x = (tela.largura + 5 * tela.largura - obstaculos[i].largura) + distanciaExtra;
+                    obstaculos[i].y = tela.altura * 0.844   - obstaculos[i].altura;
                 }
 
 
@@ -216,7 +216,7 @@
             //...
 
             cao.desenha(tela);
-            tempo.texto = (60 - Math.floor(cronometro.tempoDecorrido / 10) / 100).toFixed(2);
+            tempo.texto = (45 - Math.floor(cronometro.tempoDecorrido / 10) / 100).toFixed(2);
             tempo.fonte = "Pixelify Sans";
             tempo.desenha(tela);
 
@@ -229,7 +229,7 @@
             //...
             if (continua) {
                 contador++;
-                if (cronometro.tempoDecorrido > 60000) {
+                if (cronometro.tempoDecorrido > 45000) {
                     fim.tamanho = 128;
                     fim.fonte = "Pixelify Sans";
                     fim.x = tela.largura * 0.5 - fim.largura * 0.5;
